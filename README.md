@@ -1,6 +1,6 @@
 # 🎥 REELS PRO — Dive into the World of Creating Reels.
 
-**Shortify** is a web application inspired by platforms like **YouTube Shorts** and **Instagram Reels**.  
+**ReelsPro** is a web application inspired by platforms like **YouTube Shorts** and **Instagram Reels**.  
 It replicates the core business logic behind short-form video platforms by integrating authentication,  
 secure video uploads, and content streaming — all optimized for vertical **(9:16)** video experiences.
 
