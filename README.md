@@ -1,4 +1,4 @@
-# 🎥 Shortify – A Short Video Sharing Platform
+# 🎥 REELS PRO — Dive into the World of Creating Reels.
 
 **Shortify** is a web application inspired by platforms like **YouTube Shorts** and **Instagram Reels**.  
 It replicates the core business logic behind short-form video platforms by integrating authentication,  
