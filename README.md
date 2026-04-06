@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎥 REELS PRO — Dive into the World of Creating Reels.
 
-## Getting Started
+**ReelsPro** is a web application inspired by platforms like **YouTube Shorts** and **Instagram Reels**.  
+It replicates the core business logic behind short-form video platforms by integrating authentication,  
+secure video uploads, and content streaming — all optimized for vertical **(9:16)** video experiences.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🔐 Core Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Authentication System
+- Users must authenticate to access the home feed.
+- Authentication is managed using **JSON Web Tokens (JWT)** with a **1-day expiry**.
+- After expiry, users must re-login to regain access.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Home Page Access
+- Authenticated users can view a feed of all uploaded videos.
+- The layout resembles **Instagram's** UI for familiarity and ease of use.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Video Streaming
+- All videos are displayed in a **9:16 vertical format**.
 
-## Learn More
+### 4. Secure Video Uploading
+- Videos are uploaded and delivered via **ImageKit** for fast, optimized performance.
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Log-out Functionality
+- A dedicated **log-out button** allows users to securely end their session.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Upcoming Features
 
-## Deploy on Vercel
+### 1. User-Controlled Content Deletion
+- Uploaders will be able to delete their own videos.
+- They can still view content from other users.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. User Profile Pages
+- Every user will have a **personal profile page** to track and manage uploaded content.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
