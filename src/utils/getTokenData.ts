@@ -18,6 +18,8 @@ export const getDataToken = async (request: NextRequest) => {
     console.log(decodedToken);
 
     return decodedToken._id;
+
+
   } catch (error: any) {
     console.log("Error fetching cookies");
   }

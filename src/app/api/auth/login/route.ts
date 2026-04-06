@@ -1,11 +1,11 @@
 import dbConnect from "@/db/db";
 import User, { IUser } from "@/models/user.model";
-import bcrypt from "bcryptjs";
-import { NextResponse } from "next/server";
+import bcryptjs from "bcryptjs";
+import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-export async function POST(request: NextResponse) {
-  const { identifier, password }: { identifier: string; password: string } =
+export async function POST(request: NextRequest) {
+  const { identifier, password } : { identifier: string; password: string } =
     await request.json();
 
   if (!identifier || !password) {
@@ -18,14 +18,14 @@ export async function POST(request: NextResponse) {
     );
   }
 
-  await dbConnect();
-
+  
   try {
+    await dbConnect();
     const user = await User.findOne(
       {
         $or: [{ email: identifier }, { username: identifier }],
       }
-    ).select("+password");
+    )
 
     if (!user) {
       return NextResponse.json(
@@ -37,7 +37,7 @@ export async function POST(request: NextResponse) {
       );
     }
 
-    const verificationPassword = await bcrypt.compare(password, user.password!);
+    const verificationPassword = await bcryptjs.compare(password, user.password!);
 
     if (!verificationPassword) {
       return NextResponse.json(
@@ -51,7 +51,7 @@ export async function POST(request: NextResponse) {
 
     const token = jwt.sign(
       {
-        _id: user._id,
+        _id: user._id.toString(),
       },
       process.env.TOKEN_SECERET!,
       {

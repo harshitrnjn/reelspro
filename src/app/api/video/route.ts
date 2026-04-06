@@ -5,28 +5,30 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getDataToken(request)
+    const session = await getDataToken(request);
 
     if (!session) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Unauthorized Request",
-        },
+        { success: false, message: "Unauthorized Request" },
         { status: 401 }
       );
     }
 
     await dbConnect();
 
-    const { title, description, videoUrl, thumbnailUrl, controls, quality } = await request.json();
+    const body = await request.json();
+    const { title, description, videoUrl, thumbnailUrl, controls, quality } = body;
 
-    if (!title || !description || !videoUrl || !thumbnailUrl) {
+    if (!title?.trim()) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Fields are missing",
-        },
+        { success: false, message: "Title is required" },
+        { status: 400 }
+      );
+    }
+
+    if (!videoUrl?.startsWith("http")) {
+      return NextResponse.json(
+        { success: false, message: "Invalid video URL" },
         { status: 400 }
       );
     }
@@ -36,34 +38,33 @@ export async function POST(request: NextRequest) {
       description,
       videoUrl,
       thumbnailUrl,
-      controls: controls || true,
+      controls: controls ?? true,
       videoDimensions: {
         height: 1920,
         width: 1080,
-        quality: quality || 100
-      }
+        quality: quality ?? 100,
+      },
+      user: session.userId, // 🔥 important
     };
 
-     const newVideo = await Video.create(videoData);
+    const newVideo = await Video.create(videoData);
 
-     if(!newVideo){
-        return NextResponse.json({ 
-            success: false,
-            message: "Error uploading video"
-         }, { status: 400 })
-     }
-
-     return NextResponse.json({
+    return NextResponse.json(
+      {
         success: true,
         message: "Video uploaded successfully",
-        videoDetails: newVideo
-     }, { status: 200 })
+        videoDetails: newVideo,
+      },
+      { status: 200 }
+    );
 
   } catch (error: any) {
+    console.error("UPLOAD ERROR:", error);
+
     return NextResponse.json(
       {
         success: false,
-        message: "Error while uploading the video || Internal server error",
+        message: "Internal server error",
       },
       { status: 500 }
     );
@@ -76,31 +77,23 @@ export async function GET() {
 
     const videos = await Video.find({}).sort({ createdAt: -1 }).lean();
 
-    if (!videos || videos.length == 0) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Error while fetching videos, empty array returned",
-        },
-        { status: 400 }
-      );
-    }
-
     return NextResponse.json(
       {
-        success: true,
-        message: "Videos fetched successfully",
+        success: videos.length > 0 ? true : false ,
+        message: videos.length > 0 ? "Videos fetched successfully" : "No videos found",
         videos: videos,
       },
-      { status: 200 }
+      { status: videos.length > 0 ? 200 : 400 }
     );
   } catch (error: any) {
     return NextResponse.json(
       {
         success: false,
         message: "Error while fetching videos",
+        error: error.message,
       },
       { status: 500 }
     );
   }
 }
+

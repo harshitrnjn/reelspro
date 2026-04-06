@@ -4,12 +4,14 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { ImSpinner2 } from "react-icons/im";
+import mongoose from 'mongoose'
 const page = () => {
 
   type Video = {
     title: string,
     videoUrl: string,
-    description: string
+    description: string,
+    _id: mongoose.Types.ObjectId
   }
 
   const [user, setUser] = useState("")
@@ -71,14 +73,14 @@ const page = () => {
   }, [videos]);
 
   const pass = () => {
-    route.push(`/upload?user=${encodeURIComponent(user)}`)
+    route.push(`/upload?user=${user}`)
   }
   return (
     <div className='w-full min-h-screen bg-gray-400'>
       <div className='w-full h-[11vh] bg-gray-100 flex justify-evenly items-center gap-x-20 ' >
         <h1 className='text-5xl font-bold ' >ReelsPro</h1>
         <h1 className='text-2xl font-semibold ' >
-          Welcome, {user}
+          Welcome, <span title='Click to visit the profile' className='uppercase' >{user}</span>
         </h1>
         <div className='flex gap-x-7'>
           <button onClick={pass} className='text-black font-semibold text-lg border-2 px-4 py-2 rounded-lg hover:shadow-lg border-gray-300' >
@@ -94,8 +96,8 @@ const page = () => {
         
         {
           videos ? (
-            videos.map((video) => (
-              <div className="w-[17vw] h-[70vh] flex  overflow-hidden bg-white p-3 flex-col">
+            videos.map((video, index) => (
+              <div key={index} className="w-[17vw] h-[65vh] flex  overflow-hidden bg-white p-3 flex-col">
                 <video
                   src={video.videoUrl}
                   muted

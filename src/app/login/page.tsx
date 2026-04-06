@@ -85,7 +85,7 @@ const page = () => {
                                 onChange={(e) => { setData({ ...data, password: e.target.value }) }}
                             />
                         </div>
-                        {disableButton ? <button className='bg-gray-500 py-3 mt-2 rounded-lg text-base text-white font-bold uppercase hover:cursor-not-allowed ' > Register </button> : <button type='submit' className='bg-black py-3 mt-2 rounded-lg text-base text-white font-bold uppercase flex justify-center items-center ' > {isLoading ? <LuLoaderCircle className='animate-spin text-2xl ' /> : "Register"} </button>}
+                        {disableButton ? <button className='bg-gray-500 py-3 mt-2 rounded-lg text-base text-white font-bold uppercase hover:cursor-not-allowed ' > LOG IN </button> : <button type='submit' className='bg-black py-3 mt-2 rounded-lg text-base text-white font-bold uppercase flex justify-center items-center ' > {isLoading ? <LuLoaderCircle className='animate-spin text-2xl ' /> : "Register"} </button>}
                     </form>
                     <div>
                         <p className='text-black text-center font-bold mt-4 ' >
